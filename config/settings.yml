@@ -45,7 +45,7 @@ password_required_char_classes:
   security_notifications: 1
 password_min_length:
   format: int
-  default: 8
+  default: 6
   security_notifications: 1
 # Maximum password age in days
 password_max_age:

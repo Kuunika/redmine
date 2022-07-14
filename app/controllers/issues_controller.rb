@@ -93,6 +93,7 @@ class IssuesController < ApplicationController
   end
 
   def show
+    @facilities = File.read("public/health-facilities.json")
     @journals = @issue.visible_journals_with_index
     @has_changesets = @issue.changesets.visible.preload(:repository, :user).exists?
     @relations =
@@ -180,7 +181,6 @@ class IssuesController < ApplicationController
 
   def edit
     return unless update_issue_from_params
-
     respond_to do |format|
       format.html {}
       format.js
@@ -190,6 +190,7 @@ class IssuesController < ApplicationController
   def update
     return unless update_issue_from_params
 
+    @facilities = File.read("public/health-facilities.json")
     @issue.save_attachments(params[:attachments] ||
                              (params[:issue] && params[:issue][:uploads]))
     saved = false

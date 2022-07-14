@@ -62,6 +62,7 @@
 
 <%= javascript_tag do %>
 $(document).ready(function(){
+
   $("#issue_tracker_id, #issue_status_id").each(function(){
     $(this).val($(this).find("option[selected=selected]").val());
   });
@@ -71,6 +72,7 @@ $(document).ready(function(){
     $('#issue_assigned_to_id').val(element.data('id'));
     element.hide();
   });
+  
   $('#issue_assigned_to_id').change(function(event){
     var assign_to_me_link = $(".assign-to-me-link");
 
@@ -85,5 +87,25 @@ $(document).ready(function(){
       }
     }
   });
+  
+  var facilities = <%= @facilities.html_safe%>;
+
+	
+  $("#issue_custom_field_values_2").change(function(){
+  
+        $('#issue_custom_field_values_3').empty();
+        $('#issue_custom_field_values_3').append($('<option>', { 
+		text : "All facilities"
+	    }));
+	    
+  	var district_facilities = facilities[this.value];
+  	
+  	
+  	$.each(district_facilities, function (i, facility) {
+	    $('#issue_custom_field_values_3').append($('<option>', { 
+		text : facility
+	    }));
+	});
+  })
 });
 <% end %>
