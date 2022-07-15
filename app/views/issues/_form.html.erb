@@ -60,6 +60,10 @@
    object_id: @issue.id)}) %>
 <% end %>
 
+<div id="closed-issue-solution-alert" style="display:none;min-width: 350px; font-size: 1.3em;color: tomato;font-weight: bold;">
+  Please enter solution in the notes section below to close the issue!
+</div>
+
 <%= javascript_tag do %>
 $(document).ready(function(){
 
@@ -89,7 +93,7 @@ $(document).ready(function(){
   });
   
   var facilities = <%= @facilities.html_safe%>;
-
+  var status_id = -1;
 	
   $("#issue_custom_field_values_2").change(function(){
   
@@ -106,6 +110,27 @@ $(document).ready(function(){
 		text : facility
 	    }));
 	});
+  });
+  
+  $("#issue_status_id").change(function(){
+  	updateIssueFrom('/issues/<%=params[:id]%>/edit.js', this);
+
+       
+  });
+  
+  $('#issue_status_id').change(function() {
+  	status_id = this.value;
   })
+  
+  $('#issue-form').submit(function() {
+
+    if(status_id == 5 && $("#issue_tracker_id").val() == 1 && $("#issue_notes").val().trim() == ""){ 
+	showModal("closed-issue-solution-alert", "100px;")
+	return false;
+    }    
+
+});
+  
+  
 });
 <% end %>
