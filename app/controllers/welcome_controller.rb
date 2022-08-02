@@ -21,7 +21,7 @@ class WelcomeController < ApplicationController
   self.main_menu = false
 
   def index
-    @news = News.latest User.current
+    @news = News.latest User.current, 8
     
     with_subprojects = Setting.display_subprojects_issues?
     @field = "category_id"
