@@ -1566,6 +1566,10 @@ class Issue < ActiveRecord::Base
   def self.by_category(project, with_subprojects=false)
     count_and_group_by(:project => project, :association => :category, :with_subprojects => with_subprojects)
   end
+  
+   def self.by_category_all_projects
+    count_and_group_by(:association => :category)
+  end
 
   def self.by_assigned_to(project, with_subprojects=false)
     count_and_group_by(:project => project, :association => :assigned_to, :with_subprojects => with_subprojects)

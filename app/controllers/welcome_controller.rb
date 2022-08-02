@@ -22,6 +22,38 @@ class WelcomeController < ApplicationController
 
   def index
     @news = News.latest User.current
+    
+    with_subprojects = Setting.display_subprojects_issues?
+    @field = "category_id"
+    
+    @all_rows = []
+    Project.all.each do |project|
+    	  @all_rows << [
+    	  project, (project.issue_categories + [IssueCategory.new(:name => "[#{l(:label_none)}]")]),
+    	  Issue.by_category(project, with_subprojects)
+    	]    	
+    end
+    
+    @data = Issue.by_category_all_projects
+    data = {}
+    @data.each do |d|
+    	data[IssueStatus.find(d['status_id']).name] = d['total']
+    end    
+    
+    @report_title = l(:field_category)
+    @statuses = Project.first.rolled_up_statuses.sorted.to_a    
+    
+    @labels = []
+    @data_rows = []
+    colors = ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)', 'rgba(75, 192, 192)', 'rgba(153, 102, 255)', 'rgba(255, 159, 64)'];
+    
+    @statuses.each do |status|
+    	@labels    << status.name
+	@data_rows << data[status.name] || 0
+    end
+    
+    @colors = colors[0 .. (@statuses.length - 1)]
+    
   end
 
   def robots

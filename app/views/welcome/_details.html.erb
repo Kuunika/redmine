@@ -1,0 +1,100 @@
+<html>
+<% if @statuses.empty? or all_rows.empty? %>
+    <p><i><%=l(:label_no_data)%></i></p>
+<% else %>
+
+
+<div class="issue-report-graph hide-when-print" style="width: 80%; margin: auto; background-color: ghostwhite;">
+  <canvas id="issues_by_status"></canvas>
+</div>
+
+
+<table class="list issue-report" style="margin-top: 20px;">
+<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 100%;"> Issue Status by Project <caption>
+<thead><tr>
+<th></th>
+<% for status in @statuses %>
+<th><%= status.name %></th>
+<% end %>
+<th><strong>Total open</strong></th>
+<th><strong>Total closed</strong></th>
+<th><strong><%=l(:label_total)%></strong></th>
+</tr></thead>
+<tbody>
+<% all_rows.each do |project, rows, data| %>
+   <% for row in rows %>
+	<tr>
+	  <td class="name"><%= link_to project.name, aggregate_path(project, field_name, row, :subproject_id => nil) %></td>
+	  <% for status in @statuses %>
+	    <td><%= aggregate_link data, { field_name => row.id, "status_id" => status.id }, aggregate_path(project, field_name, row, :status_id => status.id, :subproject_id => nil) %></td>
+	  <% end %>
+	  <td><%= aggregate_link data, { field_name => row.id, "closed" => 0 }, aggregate_path(project, field_name, row, :status_id => "o", :subproject_id => nil) %></td>
+	  <td><%= aggregate_link data, { field_name => row.id, "closed" => 1 }, aggregate_path(project, field_name, row, :status_id => "c", :subproject_id => nil) %></td>
+	  <td><%= aggregate_link data, { field_name => row.id }, aggregate_path(project, field_name, row, :status_id => "*", :subproject_id => nil) %></td>
+	</tr>
+  <% end %>
+<% end %>
+
+</tbody>
+</table>
+
+
+<%#= javascript_tag do %>
+
+<script>
+  function renderChart(canvas_id, title, chartData){
+     
+        
+    new Chart($(canvas_id), {
+      type: 'bar',
+      data: chartData,
+      options: {
+        indexAxis: 'y',
+        elements: {
+          bar: {borderWidth: 2}
+        },
+        responsive: true,
+        plugins: {
+          legend: false,
+          title: {
+            display: true,
+            text: title,
+            font: {weight: "bold"}
+          }
+        },
+        scales: {
+          yAxis: {stacked: true},
+          xAxis: {
+          	stacked: true,
+          	ticks: {
+          		precision: 0
+          	}
+          }
+        }
+      }
+    });
+  }
+  
+  $(document).ready(function(){
+    
+    var chartData2 = {
+        labels: <%= raw @labels.to_json %>,
+        legend: false,
+        datasets: [{
+            label: 'Total Issues',
+            data: <%= raw @data_rows.to_json %>,
+            backgroundColor: <%= raw @colors.to_json %>,
+            borderColor: <%= raw @colors.to_json %>,
+            borderWidth: 1
+        }]
+    }
+
+    renderChart("#issues_by_status", "<%= l(:label_issues_by, l(:field_status)) %>", chartData2);
+  });
+<% end %>
+<% content_for :header_tags do %>
+  <%= javascript_include_tag "chart.min" %>
+<% end %>
+
+</script>
+</html>

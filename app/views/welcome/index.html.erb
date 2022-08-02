@@ -1,9 +1,10 @@
-<h2><%= l(:label_home) %></h2>
+<h2><%#= l(:label_home) %></h2>
 
 <div class="splitcontent">
 <div class="splitcontentleft">
   <div class="wiki">
-    <%= textilizable Setting.welcome_text %>
+    <%#= textilizable Setting.welcome_text %>
+    <%= render :partial => 'welcome/details', :locals => { :data => @data, :field_name => @field, :all_rows => @all_rows } %>
   </div>
   <%= call_hook(:view_welcome_index_left) %>
 </div>
