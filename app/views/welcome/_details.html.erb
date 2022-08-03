@@ -23,7 +23,7 @@
 <% all_rows.each do |project, rows, data| %>
    <% for row in rows %>
 	<tr>
-	  <td class="name"><%= link_to project.name, aggregate_path(project, field_name, row, :subproject_id => nil) %></td>
+	  <td class="name"><%= link_to project.name, "/projects/#{project.name.downcase}" %></td>
 	  <% for status in @statuses %>
 	    <td><%= aggregate_link data, { field_name => row.id, "status_id" => status.id }, aggregate_path(project, field_name, row, :status_id => status.id, :subproject_id => nil) %></td>
 	  <% end %>
