@@ -18,6 +18,16 @@
 <!-- page specific tags -->
 <%= yield :header_tags -%>
 </head>
+<style>
+	#top-menu a{
+	
+	  font-size: 1.2em;
+	  padding: 15px;
+	  margin: 10px;
+	}
+</style>
+
+
 <body class="<%= body_css_classes %>">
 <%= call_hook :view_layouts_base_body_top %>
 <div id="wrapper">
@@ -33,6 +43,8 @@
             <% end %>
         </div>
     <% end %>
+    
+    
 
     <% if User.current.logged? %>
         <div class="flyout-menu__avatar <% if !Setting.gravatar_enabled? %>flyout-menu__avatar--no-avatar<% end %>">
@@ -87,11 +99,21 @@
         <%= render_project_jump_box %>
     </div>
     <% end %>
+    
 
-         <img width="90" height="80" src="<%= Redmine::Utils.relative_url_root %>/images/kuunika.png" style="margin-top: 2px; margin-left: 15px;"/>
-         <img width="90" height="80" src="<%= Redmine::Utils.relative_url_root %>/images/gov.png" style="margin-top: 2px; margin-left: 15px;"/>
     <h1><%= page_header_title %></h1>
-
+    
+	<table class='pull-left' style="margin: auto; margin-right: 2%;margin-top: 0%">
+		<tr>
+			  <td>
+			 	<img width="60" height="60" src="<%= Redmine::Utils.relative_url_root %>/images/kuunika.png" style=""/>
+		 	</td>
+		 	<td>
+			 	<img width="60" height="60" src="<%= Redmine::Utils.relative_url_root %>/images/gov.png" style=""/>
+		 	</td>
+		 </tr>
+        </table>
+        
     <% if display_main_menu?(@project) %>
     <div id="main-menu" class="tabs">
         <%= render_main_menu(@project) %>
