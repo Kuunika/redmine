@@ -87,6 +87,7 @@ pre, code {font-family: Consolas, Menlo, "Liberation Mono", Courier, monospace;}
 
 #main-menu .tabs-buttons {
   right: 6px;
+  font-size: 1.3em;
   background-color: transparent;
   border-bottom-color: transparent;
 }
