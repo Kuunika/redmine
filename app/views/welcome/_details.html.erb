@@ -3,10 +3,11 @@
     <p><i><%=l(:label_no_data)%></i></p>
 <% else %>
 
-<div style="width: 100%; text-align: center;margin-bottom: 5%; " >
-  <% @issue_priorities.each do |priority_name,  count|%>
-    <button type="button" class="btn btn-danger" style="font-size: 1.3em;">
-      <%=priority_name%> <span> (<%= count %>) </span>
+<div style="width: 100%; text-align: center; margin-bottom: 3%; " >
+  <% @issue_priorities.each_with_index do |p, i|
+    %>
+    <button type="button" class="btn btn-danger" style="font-size: 1.2em;margin-left: 3%;cursor: pointer;">
+      <%=p[0]%> <span style="color: <%=@colors[i]%>"> (<%= p[1] %>) </span>
     </button>
   <% end %>
 </div> 
