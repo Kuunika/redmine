@@ -59,37 +59,19 @@
 <%#= javascript_tag do %>
 
 <script>
-  function renderChart(canvas_id, title, chartData){
-     
+  function renderChart(canvas_id, chartData, chartType, options){
         
     new Chart($(canvas_id), {
-      type: 'pie',
+      type: chartType,
       data: chartData,
-      options: {
-        maintainAspectRatio: false,
-        responsive: true,
-        plugins: {
-          legend: {
-            position: "right",
-            barWidth: "20",
-          },
-          title: {
-            display: true,
-            text: title,
-            font: {
-              size: 15,
-              weight: "bold"
-             }
-          }
-        },
-        
-      }
+      options: options,
     });
   }
-  
+
+
   $(document).ready(function(){
     
-    var chartData2 = {
+    var chartData1 = {
         labels: <%= raw @labels.to_json %>,
         legend: false,
         datasets: [{
@@ -101,7 +83,58 @@
         }]
     }
 
-    renderChart("#issues_by_status", "<%= l(:label_issues_by, l(:field_status)) %>", chartData2);
+    options1 = {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "right",
+          barWidth: "20",
+        },
+        title: {
+          display: true,
+          text: "Issues by Status",
+          font: {
+            size: 15,
+            weight: "bold"
+           }
+        }
+      },
+      
+    }
+
+    var chartData2 = {
+      labels: <%= raw @district_labels.to_json %>,
+      legend: false,
+      datasets: [{
+          label: 'Total Open Issues',
+          data: <%= raw @data_rows.to_json %>,
+          backgroundColor: <%= raw @colors.reverse.to_json %>,
+          borderColor: <%= raw @colors.to_json %>,
+          borderWidth: 1
+      }]
+    }
+
+    options2 = {
+      maintainAspectRatio: false,
+      responsive: true,
+      plugins: {
+        legend: false,
+        title: {
+          display: true,
+          text: "Top 5 Districts with Most Open Issues",
+          font: {
+            size: 15,
+            weight: "bold"
+           }
+        }
+      },
+      
+    }
+
+    renderChart("#issues_by_status",  chartData1, "pie", options1);
+    renderChart("#issues_by_district", chartData2, "bar", options2);
+
   });
 <% end %>
 <% content_for :header_tags do %>

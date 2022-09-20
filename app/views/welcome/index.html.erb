@@ -10,6 +10,11 @@
 </div>
 
 <div class="splitcontentright">
+
+  <div class="issue-report-districts hide-when-print" style="width: 80%; height: 52%; margin: auto; background-color: ghostwhite; padding: 0px; margin-bottom: 5%;margin-top: 7%;">
+    <canvas id="issues_by_district"></canvas>
+  </div>
+
   <% if @news.any? %>
   <div class="news box">
   <h3><%=l(:label_news_latest)%></h3>
