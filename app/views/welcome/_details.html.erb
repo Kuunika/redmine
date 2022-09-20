@@ -5,12 +5,12 @@
     display: block;
     max-width: 100%;
     margin: 0 auto;
-    overflow-x: auto;
+    overflow-x: scroll;
     white-space: nowrap;
   }
 
-  .issue-report th, .issue-report th{
-    width: 16%;
+  .issue-report th, .issue-report td{
+    width: 15.5%;
   }
 </style>
 <% if @statuses.empty? or all_rows.empty? %>
@@ -30,8 +30,8 @@
   <canvas id="issues_by_status"></canvas>
 </div>
 
-<table class="list issue-report" style=" border: 1px dotted lightgray !important;margin-top: 5%;">
-  <caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 100%; overflow: auto;"> Issue Status by Project <caption>
+<table class="list issue-report" style=" border: none; border-top: 1px dotted lightgray; padding-bottom: 3%; border-bottom: 1px dotted lightgray; margin-top: 5%;">
+  <caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 100%;"> Issue Status by Project <caption>
     <thead><tr>
     <th></th>
     <% for status in @statuses %>
