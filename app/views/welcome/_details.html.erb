@@ -3,14 +3,21 @@
     <p><i><%=l(:label_no_data)%></i></p>
 <% else %>
 
+<div style="width: 100%; text-align: center;margin-bottom: 5%; " >
+  <% @issue_priorities.each do |priority_name,  count|%>
+    <button type="button" class="btn btn-danger" style="font-size: 1.3em;">
+      <%=priority_name%> <span> (<%= count %>) </span>
+    </button>
+  <% end %>
+</div> 
 
-<div class="issue-report-graph hide-when-print" style="width: 57%; margin: auto; background-color: ghostwhite; padding: 0px;">
+<div class="issue-report-graph hide-when-print" style="width: 80%; margin: auto; background-color: ghostwhite; padding: 0px;">
   <canvas id="issues_by_status"></canvas>
 </div>
 
-<div style="width: 90%; overflow-x: auto;">
-<table class="list issue-report" style="margin-top: 5x; border: 1px dotted black !important;">
-<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 99%;"> Issue Status by Project <caption>
+<div style="width: 100%; overflow-x: auto; margin-top: 7%;">
+<table class="list issue-report" style=" border: 1px dotted black !important;">
+<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 99%; overflow: auto;"> Issue Status by Project <caption>
 <thead><tr>
 <th></th>
 <% for status in @statuses %>
@@ -46,7 +53,7 @@
       type: 'pie',
       data: chartData,
       options: {
-           
+        maintainAspectRatio: false,
         responsive: true,
         plugins: {
           legend: {

@@ -30,6 +30,16 @@ class IssuePriority < Enumeration
 
   OptionName = :enumeration_issue_priorities
 
+  def self.stats
+
+    stats = {}
+    self.all.each do |priority|
+      stats[priority.name] = Issue.where(priority: priority.id).count
+    end
+
+    stats
+  end 
+
   def option_name
     OptionName
   end

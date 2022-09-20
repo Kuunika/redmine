@@ -51,9 +51,10 @@ class WelcomeController < ApplicationController
     	@labels    << status.name
 	    @data_rows << data[status.name] || 0
     end
-    
     @colors = colors[0 .. (@statuses.length - 1)]
-    
+
+    #Issue priority for badges on dashboard
+    @issue_priorities = IssuePriority.stats    
   end
 
   def robots
