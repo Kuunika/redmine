@@ -1,4 +1,18 @@
 <html>
+
+<style>
+  .issue-report {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .issue-report th, .issue-report th{
+    width: 16%;
+  }
+</style>
 <% if @statuses.empty? or all_rows.empty? %>
     <p><i><%=l(:label_no_data)%></i></p>
 <% else %>
@@ -16,33 +30,31 @@
   <canvas id="issues_by_status"></canvas>
 </div>
 
-<div style="width: 100%; overflow-x: auto; margin-top: 7%;">
-<table class="list issue-report" style=" border: 1px dotted black !important;">
-<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 99%; overflow: auto;"> Issue Status by Project <caption>
-<thead><tr>
-<th></th>
-<% for status in @statuses %>
-<th><%= status.name %></th>
-<% end %>
+<table class="list issue-report" style=" border: 1px dotted lightgray !important;margin-top: 5%;">
+  <caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 100%; overflow: auto;"> Issue Status by Project <caption>
+    <thead><tr>
+    <th></th>
+    <% for status in @statuses %>
+    <th><%= status.name %></th>
+    <% end %>
 
-<th><strong><%=l(:label_total)%></strong></th>
-</tr></thead>
-<tbody>
-<% all_rows.each do |project, rows, data| %>
-   <% for row in rows %>
-	<tr>
-	  <td class="name"><%= link_to project.name, "/projects/#{project.name.downcase}" %></td>
-	  <% for status in @statuses %>
-	    <td><%= aggregate_link data, { field_name => row.id, "status_id" => status.id }, aggregate_path(project, field_name, row, :status_id => status.id, :subproject_id => nil) %></td>
-	  <% end %>
-	  <td><%= aggregate_link data, { field_name => row.id }, aggregate_path(project, field_name, row, :status_id => "*", :subproject_id => nil) %></td>
-	</tr>
-  <% end %>
-<% end %>
+    <th><strong><%=l(:label_total)%></strong></th>
+    </tr></thead>
+    <tbody>
+    <% all_rows.each do |project, rows, data| %>
+      <% for row in rows %>
+      <tr>
+        <td class="name"><%= link_to project.name, "/projects/#{project.name.downcase}" %></td>
+        <% for status in @statuses %>
+          <td><%= aggregate_link data, { field_name => row.id, "status_id" => status.id }, aggregate_path(project, field_name, row, :status_id => status.id, :subproject_id => nil) %></td>
+        <% end %>
+        <td><%= aggregate_link data, { field_name => row.id }, aggregate_path(project, field_name, row, :status_id => "*", :subproject_id => nil) %></td>
+      </tr>
+      <% end %>
+    <% end %>
 
-</tbody>
+  </tbody>
 </table>
-</div>
 
 <%#= javascript_tag do %>
 
