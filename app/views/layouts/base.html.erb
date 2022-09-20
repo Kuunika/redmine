@@ -102,20 +102,9 @@
         <%= render_project_jump_box %>
     </div>
     <% end %>
-    
 
-    <h1 style="margin-top: 1.3%; padding-left: 1%;"><%= page_header_title %></h1>
-    
-	<table class='pull-left' style="margin: auto; margin-right: 2%;margin-top: 0%">
-		<tr>
-			  <td>
-			 	<img width="60" height="60" src="<%= Redmine::Utils.relative_url_root %>/images/kuunika.png" style=""/>
-		 	</td>
-		 	<td>
-			 	<img width="60" height="60" src="<%= Redmine::Utils.relative_url_root %>/images/gov.png" style=""/>
-		 	</td>
-		 </tr>
-        </table>
+     <h1 style="margin-top: 1.3%; padding-left: 1.5%;"><%= page_header_title  %></h1>
+     <img width="60" height="60" src="<%= Redmine::Utils.relative_url_root %>/images/gov.png" style=" margin: auto; margin-left: 1%; margin-bottom: 1%; " />
         
     <% if display_main_menu?(@project) %>
     <div id="main-menu" class="tabs">
