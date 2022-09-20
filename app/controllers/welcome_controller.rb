@@ -45,11 +45,11 @@ class WelcomeController < ApplicationController
     
     @labels = []
     @data_rows = []
-    colors = ['rgba(255, 99, 132)', 'rgba(54, 162, 235)', 'rgba(255, 206, 86)', 'rgba(75, 192, 192)', 'rgba(153, 102, 255)', 'rgba(255, 159, 64)'];
+    colors = ['rgba(255, 99, 132)', 'rgba(255, 206, 86)',  'rgba(54, 162, 235)', 'rgba(75, 192, 192)', 'rgba(153, 102, 255)', 'rgba(255, 159, 64)'];
     
     @statuses.each do |status|
     	@labels    << status.name
-	@data_rows << data[status.name] || 0
+	    @data_rows << data[status.name] || 0
     end
     
     @colors = colors[0 .. (@statuses.length - 1)]

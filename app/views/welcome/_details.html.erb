@@ -4,13 +4,13 @@
 <% else %>
 
 
-<div class="issue-report-graph hide-when-print" style="width: 80%; margin: auto; background-color: ghostwhite;">
+<div class="issue-report-graph hide-when-print" style="width: 57%; margin: auto; background-color: ghostwhite; padding: 0px;">
   <canvas id="issues_by_status"></canvas>
 </div>
 
-
-<table class="list issue-report" style="margin-top: 20px;">
-<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 100%;"> Issue Status by Project <caption>
+<div style="width: 90%; overflow-x: auto;">
+<table class="list issue-report" style="margin-top: 5x; border: 1px dotted black !important;">
+<caption style="font-size: 1.2em; font-weight: bold; text-align: center;width: 99%;"> Issue Status by Project <caption>
 <thead><tr>
 <th></th>
 <% for status in @statuses %>
@@ -34,7 +34,7 @@
 
 </tbody>
 </table>
-
+</div>
 
 <%#= javascript_tag do %>
 
@@ -43,16 +43,16 @@
      
         
     new Chart($(canvas_id), {
-      type: 'bar',
+      type: 'pie',
       data: chartData,
       options: {
-        indexAxis: 'y',
-        elements: {
-          bar: {borderWidth: 2}
-        },
+           
         responsive: true,
         plugins: {
-          legend: false,
+          legend: {
+            position: "right",
+            barWidth: "20",
+          },
           title: {
             display: true,
             text: title,
@@ -62,26 +62,7 @@
              }
           }
         },
-        scales: {
-          yAxis: {
-          stacked: true,
-          ticks: {
-          		font: {
-          			size: 14,
-          			color: "#ccc"
-          		}
-          	}
-          },
-          xAxis: {
-          	stacked: true,
-          	ticks: {
-          		precision: 0,
-          		font: {
-          			size: 14
-          		}
-          	}
-          }
-        }
+        
       }
     });
   }
