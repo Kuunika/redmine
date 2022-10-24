@@ -2057,4 +2057,14 @@ class Issue < ActiveRecord::Base
       Project
     end
   end
+
+  def self.grouped_by_custom_field(custom_field)
+      custom_field_id = CustomField.where(name: custom_field).last.id 
+
+      sql = " SELECT COUNT(*), value total FROM custom_values 
+              WHERE customized_type = 'Issue' AND custom_field_id = #{custom_field_id} 
+              GROUP BY value  
+               ORDER BY COUNT(*) DESC"
+      result = ActiveRecord::Base.connection.execute(sql).as_json
+  end
 end

@@ -55,8 +55,14 @@ class WelcomeController < ApplicationController
     @colors = colors
 
     #data for bar chart on dashboard
+    @grouped_data = Issue.grouped_by_custom_field("District")[0 .. 4] 
+    @district_labels = @grouped_data.collect{|t, n| n}
+    @district_rows  = @grouped_data.collect{|t, n| t}
 
-    @district_labels = ["Blantyre", "Ntchisi", "Kasungu", "Likoma", "Lilongwe"]
+    #data for pie chart
+    @grouped_pie_data = Issue.grouped_by_custom_field("Issue Category")
+    @pie_labels = @grouped_pie_data.collect{|t, n| n}
+    @pie_rows  = @grouped_pie_data.collect{|t, n| t}
 
     #Issue priority for badges on dashboard
     @issue_priorities = IssuePriority.stats    

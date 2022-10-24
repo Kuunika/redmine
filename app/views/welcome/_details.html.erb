@@ -72,11 +72,11 @@
   $(document).ready(function(){
     
     var chartData1 = {
-        labels: <%= raw @labels.to_json %>,
+        labels: <%= raw @pie_labels.to_json %>,
         legend: false,
         datasets: [{
             label: 'Total Issues',
-            data: <%= raw @data_rows.to_json %>,
+            data: <%= raw @pie_rows.to_json %>,
             backgroundColor: <%= raw @colors.to_json %>,
             borderColor: <%= raw @colors.to_json %>,
             borderWidth: 1
@@ -93,7 +93,7 @@
         },
         title: {
           display: true,
-          text: "Issues by Status",
+          text: "Issues by Category",
           font: {
             size: 15,
             weight: "bold"
@@ -107,9 +107,9 @@
       labels: <%= raw @district_labels.to_json %>,
       legend: false,
       datasets: [{
-          label: 'Total Open Issues',
+          label: 'Reported issues',
           data: <%= raw @data_rows.to_json %>,
-          backgroundColor: <%= raw @colors.reverse.to_json %>,
+          backgroundColor: <%= raw @colors.to_json %>,
           borderColor: <%= raw @colors.to_json %>,
           borderWidth: 1
       }]
@@ -122,7 +122,7 @@
         legend: false,
         title: {
           display: true,
-          text: "Top 5 Districts with Most Open Issues",
+          text: "Top 5 Districts with Most Reported Issues",
           font: {
             size: 15,
             weight: "bold"
